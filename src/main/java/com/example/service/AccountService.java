@@ -21,23 +21,23 @@ public class AccountService {
     public ResponseEntity<?> registerAccount(Account account) {
         if (account.getUsername() == null || account.getUsername().isBlank() ||
             account.getPassword() == null || account.getPassword().length() < 4) {
-            return ResponseEntity.badRequest().build(); // 400
+            return ResponseEntity.badRequest().build(); 
         }
 
         Optional<Account> existing = accountRepository.findByUsername(account.getUsername());
         if (existing.isPresent()) {
-            return ResponseEntity.status(409).build(); // Conflict
+            return ResponseEntity.status(409).build(); 
         }
 
         Account saved = accountRepository.save(account);
-        return ResponseEntity.ok(saved); // 200 OK
+        return ResponseEntity.ok(saved); 
     }
 
     public ResponseEntity<?> login(Account account) {
         Optional<Account> existing = accountRepository.findByUsername(account.getUsername());
         if (existing.isPresent() && existing.get().getPassword().equals(account.getPassword())) {
-            return ResponseEntity.ok(existing.get()); // 200 OK
+            return ResponseEntity.ok(existing.get());
         }
-        return ResponseEntity.status(401).build(); // Unauthorized
+        return ResponseEntity.status(401).build();
     }
 }

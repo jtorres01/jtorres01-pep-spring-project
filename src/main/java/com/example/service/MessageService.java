@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Account;
+
 import com.example.entity.Message;
 import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
@@ -23,7 +23,7 @@ public class MessageService {
         this.accountRepository = accountRepository;
     }
 
-    // 3. Create a new message
+    //Create a new message
     public ResponseEntity<?> createMessage(Message message) {
         if (message.getMessageText() == null || message.getMessageText().isBlank()
                 || message.getMessageText().length() > 255
@@ -36,18 +36,18 @@ public class MessageService {
         return ResponseEntity.ok(saved); // 200 OK
     }
 
-    // 4. Get all messages
+    //Get all messages
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
 
-    // 5. Get message by ID
+    //Get message by ID
     public ResponseEntity<?> getMessageById(int messageId) {
         Optional<Message> found = messageRepository.findById(messageId);
         return ResponseEntity.ok(found.orElse(null)); // Always 200 with empty body if not found
     }
 
-    // 6. Delete a message
+    //Delete a message
     public ResponseEntity<?> deleteMessage(int messageId) {
         if (messageRepository.existsById(messageId)) {
             messageRepository.deleteById(messageId);
@@ -56,7 +56,7 @@ public class MessageService {
         return ResponseEntity.ok().build(); // Empty response if not found
     }
 
-    // 7. Update message text
+    //Update message text
     public ResponseEntity<?> updateMessageText(int messageId, String newText) {
         if (newText == null || newText.isBlank() || newText.length() > 255) {
             return ResponseEntity.badRequest().build();
@@ -73,7 +73,7 @@ public class MessageService {
         }
     }
 
-    // 8. Get messages by accountId
+    //Get messages by accountId
     public List<Message> getMessagesByAccountId(int accountId) {
         return messageRepository.findByPostedBy(accountId);
     }
